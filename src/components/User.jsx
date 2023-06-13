@@ -22,7 +22,7 @@ const User = ({
   };
 
   return (
-    <div className="flex flex-col justify-between p-4 gap-2 border-[1px] rounded-sm border-gray-200 shadow-md md:p-6">
+    <div className="flex flex-col justify-between p-4 gap-2 border-[1px] rounded-sm border-gray-200 shadow-sm hover:shadow-md md:p-6">
       <div className="flex items-center gap-5 mb-2">
         <div className="min-w-[70px] min-h-[70px] md:min-w-[100px] md:min-h-[100px]">
           {
