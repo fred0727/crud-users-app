@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import ModalForm from "./components/ModalForm";
 import UserList from "./components/UserList";
 import axios from "axios";
-import PopUp from "./components/Popup";
+import PopUp from "./components/PopUp";
 import ModalDeleteUser from "./components/ModalDeleteUser";
 
 const BASE_URL = "https://users-crud.academlo.tech";
