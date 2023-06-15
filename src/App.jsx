@@ -25,7 +25,6 @@ function App() {
   const [users, setUsers] = useState([]);
 
   const changeShowModal = () => setIsShowModal(!isShowModal);
-  // const changeShowModalDelete = () => setIsShowModalDelete(!isShowModalDelete);
 
   const createUser = (data, reset) => {
     const url = BASE_URL + `/users/`;

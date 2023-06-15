@@ -22,10 +22,33 @@ const ModalForm = ({
   const submit = (data) => {
     if (!data.birthday) data.birthday = null;
     if (!data.image_url) data.image_url = null;
-    if (isUserToUpdate) {
-      updateUser(data, reset);
+    const validate = validateUrl(data.image_url)
+    if (data.image_url == "") {
+      if (isUserToUpdate) {
+        updateUser(data, reset);
+      } else {
+        createUser(data, reset);
+      }
     } else {
-      createUser(data, reset);
+      if (validate) {
+        if (isUserToUpdate) {
+          updateUser(data, reset);
+        } else {
+          createUser(data, reset);
+        }
+      } else {
+        document.getElementById("messageForm").innerHTML = "Url no valido";
+      }
+    }
+  };
+
+  const validateUrl = (imageurl) => {
+    try {
+      new URL(imageurl);
+      console.log(imageurl);
+      return true;
+    } catch (err) {
+      return false;
     }
   };
 
@@ -70,8 +93,8 @@ const ModalForm = ({
             type="text"
             placeholder="Nombres"
             className="flex outline-none border-[1px] border-gray-100 p-1 mt-1 w-full md:w-auto"
-            {...register("first_name",{
-              required: "Campo nombre requerido"
+            {...register("first_name", {
+              required: "Campo nombre requerido",
             })}
           />
           <input
@@ -80,8 +103,8 @@ const ModalForm = ({
             type="text"
             placeholder="Apellidos"
             className="flex outline-none border-[1px] border-gray-100 p-1 mt-1 w-full md:w-auto"
-            {...register("last_name",{
-              required: "Campo apellidos requerido"
+            {...register("last_name", {
+              required: "Campo apellidos requerido",
             })}
           />
         </div>
@@ -96,10 +119,10 @@ const ModalForm = ({
             type="email"
             placeholder="Correo electronico"
             className="outline-none border-[1px] border-gray-100 p-1 mt-1 flex w-[100%]"
-            {...register("email",{
+            {...register("email", {
               required: "Campo email requerido",
               pattern: {
-                value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                value: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
                 message: "Ingrese un correo valido",
               },
             })}
@@ -116,7 +139,7 @@ const ModalForm = ({
             type="password"
             placeholder="Contraseña"
             className="outline-none border-[1px] border-gray-100 p-1 mt-1 w-[100%]"
-            {...register("password",{
+            {...register("password", {
               required: "Campo contraseña requerido",
               minLength: {
                 value: 8,
@@ -153,12 +176,12 @@ const ModalForm = ({
         <button className="bg-violet-cl text-white p-2 mt-2 text-sm md:text-lg">
           {isUserToUpdate ? "Actualizar datos" : "Agregar nuevo usuario"}
         </button>
-        <div className="text-red-400 font-bold">
+        <div className="text-red-400 font-bold" id="messageForm">
           {errors.first_name && <p>{errors.first_name.message}</p>}
           {errors.last_name && <p>{errors.last_name.message}</p>}
           {errors.email && <p>{errors.email.message}</p>}
           {errors.password && <p>{errors.password.message}</p>}
-          </div>
+        </div>
       </form>
     </div>
   );
